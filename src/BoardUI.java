@@ -12,6 +12,7 @@ public class BoardUI extends JFrame {
     private Panel panel;
     private Timer generationTimer;
     private Timer solveTimerDFS;
+    private Timer solveTimerBFS;
     private JPanel controlPanel;
     JButton MoveRight ;
     JButton MoveLeft ;
@@ -35,6 +36,7 @@ public class BoardUI extends JFrame {
                 boardPanel.repaint();
             }
         });
+
         MoveLeft = new JButton("Move Left");
         MoveLeft.addActionListener(new ActionListener() {
             @Override
@@ -82,6 +84,7 @@ public class BoardUI extends JFrame {
             }
         });
 
+
         solveTimerDFS = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,6 +97,25 @@ public class BoardUI extends JFrame {
             }
         });
 
+        JButton solveBFSButton = new JButton("Solve with BFS");
+        solveBFSButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BFS.initializeBFS(board.getMaze(), board.getStart());
+                solveTimerBFS.start();
+            }
+        });
+        solveTimerBFS = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!BFS.stepBFS(board.getMaze(), board.getEnd())) {
+                    solveTimerBFS.stop();
+                    boardPanel.repaint();
+                } else {
+                    boardPanel.repaint();
+                }
+            }
+        });
 
         // adding comppoents to the frame
         this.setLayout(new BorderLayout());
@@ -101,14 +123,15 @@ public class BoardUI extends JFrame {
         AddingKeyBinding();
         // Add the control panel to the frame
         controlPanel.add(solveDFSButton);
+        controlPanel.add(solveBFSButton);
         controlPanel.add(MoveRight);
         controlPanel.add(MoveLeft);
         controlPanel.add(MoveUp);
         controlPanel.add(MoveDown);
         controlPanel.add(regenerateButton);
+
         // add the control panel to the frame
         this.add(controlPanel, BorderLayout.EAST);
-
 
 
         generationTimer = new Timer(100, new ActionListener() {
@@ -129,9 +152,6 @@ public class BoardUI extends JFrame {
                 }
             }
         });
-
-
-
 
         this.setVisible(true);
     }

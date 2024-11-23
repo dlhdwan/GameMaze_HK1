@@ -62,7 +62,7 @@ public class Myframe extends JFrame {
     }
 
     private void startTimer() {
-        timer = new Timer(300, e -> {
+        timer = new Timer(100, e -> {
             if (dfsQueue.isEmpty()) {
                 timer.stop();
                 return;

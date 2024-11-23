@@ -18,6 +18,7 @@ public class Board {
     }
 
     public void resetMaze() {
+        BoardSolver.clearMaze();
         maze = new int[rows][cols];
         stack = new Stack<>();
         start = new Point(1, 1);  // Fixed start at the top-left corner

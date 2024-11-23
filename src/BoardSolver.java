@@ -56,6 +56,4 @@ public class BoardSolver {
         return solutionPath;
     }
 
-
-
 }
