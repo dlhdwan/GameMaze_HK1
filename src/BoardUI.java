@@ -20,7 +20,7 @@ public class BoardUI extends JFrame {
     JButton MoveDown ;
     public BoardUI() {
         this.setTitle("Board");
-        this.setSize(cols * cellSize + 500, rows * cellSize + 100);
+        this.setSize(cols * cellSize + 200, rows * cellSize + 50);
         this.board = new Board(rows, cols);
         this.boardPanel = new BoardPanel(rows, cols, cellSize, board);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
