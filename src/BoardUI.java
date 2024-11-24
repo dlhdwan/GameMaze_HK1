@@ -45,6 +45,10 @@ public class BoardUI extends JFrame {
                     StatusLable.setText("You can't move right here" +
                             " because there is a wall");
                 }
+                if (board.getStart().equals(board.getEnd())) {
+                    WinningFrame winningFrame = new WinningFrame();
+                    dispose();
+                }
             }
         });
 
@@ -58,6 +62,10 @@ public class BoardUI extends JFrame {
                 catch (Exception ex){
                     StatusLable.setText("You can't move left here " +
                             "because there's a wall");
+                }
+                if (board.getStart().equals(board.getEnd())) {
+                    WinningFrame winningFrame = new WinningFrame();
+                    dispose();
                 }
             }
         });
@@ -73,6 +81,10 @@ public class BoardUI extends JFrame {
                     StatusLable.setText("You can't move up here" +
                             " because there's a wall");
                 }
+                if (board.getStart().equals(board.getEnd())) {
+                    WinningFrame winningFrame = new WinningFrame();
+                    dispose();
+                }
             }
         });
         MoveDown = new JButton("Move Down");
@@ -86,6 +98,11 @@ public class BoardUI extends JFrame {
                 catch (Exception ex){
                     StatusLable.setText("You can't move down here" +
                             " because there's a wall");
+
+                }
+                if (board.getStart().equals(board.getEnd())) {
+                    WinningFrame winningFrame = new WinningFrame();
+                    dispose();
                 }
             }
         });
