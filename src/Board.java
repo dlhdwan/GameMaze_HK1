@@ -91,6 +91,7 @@ public class Board {
         if (start.x > 0 && start.x < rows - 1 && start.y > 0 && start.y < cols - 1 && maze[start.x][start.y] == 1) {
             this.start = start;
         }
+        else throw new InvalidMove("Invalid Move");
     }
 
     public Point getEnd() {

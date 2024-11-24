@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BoardUI extends JFrame {
-    private int rows = 20;
-    private int cols = 20;
+    private int rows ;
+    private int cols ;
     private int cellSize = 25;
     private BoardPanel boardPanel;
     private Board board;
@@ -18,9 +18,15 @@ public class BoardUI extends JFrame {
     JButton MoveLeft ;
     JButton MoveUp ;
     JButton MoveDown ;
-    public BoardUI() {
+    JButton back;
+    JLabel StatusLable;
+    public BoardUI(int rows ,int cols) {
         this.setTitle("Board");
+        this.setIconImage(new ImageIcon("src/logo.png").getImage());
+        this.setLocation(500, 200);
         this.setSize(cols * cellSize + 200, rows * cellSize + 50);
+        this.rows = rows;
+        this.cols = cols;
         this.board = new Board(rows, cols);
         this.boardPanel = new BoardPanel(rows, cols, cellSize, board);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,8 +38,13 @@ public class BoardUI extends JFrame {
         MoveRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
                 board.setStart(new Point(board.getStart().x, board.getStart().y + 1));
-                boardPanel.repaint();
+                boardPanel.repaint();}
+                catch (Exception ex){
+                    StatusLable.setText("You can't move right here" +
+                            " because there is a wall");
+                }
             }
         });
 
@@ -41,24 +52,41 @@ public class BoardUI extends JFrame {
         MoveLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                board.setStart(new Point(board.getStart().x, board.getStart().y - 1));
-                boardPanel.repaint();
+                try {
+                    board.setStart(new Point(board.getStart().x, board.getStart().y - 1));
+                    boardPanel.repaint();                }
+                catch (Exception ex){
+                    StatusLable.setText("You can't move left here " +
+                            "because there's a wall");
+                }
             }
         });
         MoveUp = new JButton("Move Up");
         MoveUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                board.setStart(new Point(board.getStart().x - 1, board.getStart().y));
-                boardPanel.repaint();
+                try {
+                    board.setStart(new Point(board.getStart().x - 1, board.getStart().y));
+                    boardPanel.repaint();
+                }
+                catch (Exception ex){
+                    StatusLable.setText("You can't move up here" +
+                            " because there's a wall");
+                }
             }
         });
         MoveDown = new JButton("Move Down");
         MoveDown.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                board.setStart(new Point(board.getStart().x + 1, board.getStart().y));
-                boardPanel.repaint();
+                try {
+                    board.setStart(new Point(board.getStart().x + 1, board.getStart().y));
+                    boardPanel.repaint();
+                }
+                catch (Exception ex){
+                    StatusLable.setText("You can't move down here" +
+                            " because there's a wall");
+                }
             }
         });
         // creating maze button
@@ -71,6 +99,7 @@ public class BoardUI extends JFrame {
                     c.setEnabled(false);
                 }
             }
+            StatusLable.setText("Generating Maze");
             generationTimer.start();
 
         });
@@ -116,6 +145,12 @@ public class BoardUI extends JFrame {
                 }
             }
         });
+        back = new JButton("Back");
+        back.addActionListener(e -> {
+            Menu menu = new Menu();
+            this.dispose();
+        });
+        controlPanel.add(back);
 
         // adding comppoents to the frame
         this.setLayout(new BorderLayout());
@@ -129,6 +164,8 @@ public class BoardUI extends JFrame {
         controlPanel.add(MoveUp);
         controlPanel.add(MoveDown);
         controlPanel.add(regenerateButton);
+        StatusLable = new JLabel("Status");
+        controlPanel.add(StatusLable);
 
         // add the control panel to the frame
         this.add(controlPanel, BorderLayout.EAST);
@@ -144,6 +181,7 @@ public class BoardUI extends JFrame {
                             c.setEnabled(true);
                         }
                     }
+                    StatusLable.setText("Maze Generated");
 
                 }
                 else{
