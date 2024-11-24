@@ -176,9 +176,9 @@ public class BoardUI extends JFrame {
         // Add the control panel to the frame
         controlPanel.add(solveDFSButton);
         controlPanel.add(solveBFSButton);
-        controlPanel.add(MoveRight);
-        controlPanel.add(MoveLeft);
         controlPanel.add(MoveUp);
+        controlPanel.add(MoveLeft);
+        controlPanel.add(MoveRight);
         controlPanel.add(MoveDown);
         controlPanel.add(regenerateButton);
         StatusLable = new JLabel("Status");
