@@ -1,3 +1,4 @@
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,7 +8,7 @@ public class Difficulty extends JFrame {
     JButton medium;
     JButton hard;
     JButton back;
-
+    Clip buttonClip;
     Difficulty() {
         this.setTitle("Difficulty");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +46,12 @@ public class Difficulty extends JFrame {
         easy.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(10, 10);
             this.dispose();
+            if (buttonClip != null && buttonClip.isRunning()) {
+                buttonClip.stop(); // Dừng nếu đang chạy
+            }
+            buttonClip = SoundManager.playSound("back.wav", 1.0f);
         });
+
         backgroundPanel.add(easy);
 
         // Nút "Medium"
@@ -55,6 +61,10 @@ public class Difficulty extends JFrame {
         medium.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(16, 16);
             this.dispose();
+            if (buttonClip != null && buttonClip.isRunning()) {
+                buttonClip.stop(); // Dừng nếu đang chạy
+            }
+            buttonClip = SoundManager.playSound("back.wav", 1.0f);
         });
         backgroundPanel.add(medium);
 
@@ -65,6 +75,10 @@ public class Difficulty extends JFrame {
         hard.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(30, 30);
             this.dispose();
+            if (buttonClip != null && buttonClip.isRunning()) {
+                buttonClip.stop(); // Dừng nếu đang chạy
+            }
+            buttonClip = SoundManager.playSound("back.wav", 1.0f);
         });
         backgroundPanel.add(hard);
 
@@ -74,6 +88,10 @@ public class Difficulty extends JFrame {
         back.addActionListener(e -> {
             Menu menu = new Menu();
             this.dispose();
+            if (buttonClip != null && buttonClip.isRunning()) {
+                buttonClip.stop(); // Dừng nếu đang chạy
+            }
+            buttonClip = SoundManager.playSound("back.wav", 1.0f);
         });
         backgroundPanel.add(back);
 

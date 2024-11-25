@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.sound.sampled.*;
 
 public class WinningFrame extends JFrame {
     JLabel label;
     JButton back;
-
+    Clip buttonClip;
     WinningFrame() {
         this.setTitle("You Won!");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +47,11 @@ public class WinningFrame extends JFrame {
         // Cài đặt kích thước frame
         this.setSize(500, 300);
         this.setVisible(true);
+        if (buttonClip != null && buttonClip.isRunning()) {
+            buttonClip.stop(); // Dừng nếu đang chạy
+        }
+        buttonClip = SoundManager.playSound("winning-218995.wav", 0.8f);
+
     }
 
     public static void main(String[] args) {

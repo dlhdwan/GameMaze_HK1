@@ -2,6 +2,7 @@
     import java.awt.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
+    import javax.sound.sampled.*;
 
     public class BoardUI extends JFrame {
         private int rows ;
@@ -20,6 +21,7 @@
         JButton MoveDown ;
         JButton back;
         JLabel StatusLable;
+        Clip buttonClip;
         public BoardUI(int rows ,int cols) {
             this.setTitle("Board");
             this.setIconImage(new ImageIcon("src/logo.png").getImage());
@@ -44,6 +46,10 @@
                 public void actionPerformed(ActionEvent e) {
                     BoardSolver.showPath();
                     boardPanel.repaint();
+                    if (buttonClip != null && buttonClip.isRunning()) {
+                        buttonClip.stop(); // Dừng nếu đang chạy
+                    }
+                    buttonClip = SoundManager.playSound("bfsdfs.wav", 1.0f);
                 }
             });
 
@@ -54,13 +60,19 @@
                 public void actionPerformed(ActionEvent e) {
                     try{
                     board.setStart(new Point(board.getStart().x, board.getStart().y + 1));
-                    boardPanel.repaint();}
+                    boardPanel.repaint();
+                    if (buttonClip != null && buttonClip.isRunning()) {
+                        buttonClip.stop(); // Dừng nếu đang chạy
+                    }
+                    buttonClip = SoundManager.playSound("move.wav", 1.0f);
+                    }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
                         dispose();
+
                     }
                 }
             });
@@ -72,7 +84,12 @@
                 public void actionPerformed(ActionEvent e) {
                     try {
                         board.setStart(new Point(board.getStart().x, board.getStart().y - 1));
-                        boardPanel.repaint();                }
+                        boardPanel.repaint();
+                        if (buttonClip != null && buttonClip.isRunning()) {
+                            buttonClip.stop(); // Dừng nếu đang chạy
+                        }
+                        buttonClip = SoundManager.playSound("move.wav", 1.0f);
+                    }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
                     }
@@ -90,6 +107,10 @@
                     try {
                         board.setStart(new Point(board.getStart().x - 1, board.getStart().y));
                         boardPanel.repaint();
+                        if (buttonClip != null && buttonClip.isRunning()) {
+                            buttonClip.stop(); // Dừng nếu đang chạy
+                        }
+                        buttonClip = SoundManager.playSound("move.wav", 1.0f);
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
@@ -109,6 +130,10 @@
                     try {
                         board.setStart(new Point(board.getStart().x + 1, board.getStart().y));
                         boardPanel.repaint();
+                        if (buttonClip != null && buttonClip.isRunning()) {
+                            buttonClip.stop(); // Dừng nếu đang chạy
+                        }
+                        buttonClip = SoundManager.playSound("move.wav", 1.0f);
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
@@ -124,6 +149,10 @@
             JButton regenerateButton = new JButton("Generate Board");
             regenerateButton.setPreferredSize(new Dimension(150, 50));
             regenerateButton.addActionListener(e -> {
+                if (buttonClip != null && buttonClip.isRunning()) {
+                    buttonClip.stop(); // Dừng nếu đang chạy
+                }
+                buttonClip = SoundManager.playSound("geneboard.wav", 1.0f);
                 board.resetMaze();
                 boardPanel.repaint();
                 for (Component c : controlPanel.getComponents()) {
@@ -142,6 +171,10 @@
                 public void actionPerformed(ActionEvent e) {
                     DFS.initializeDFS(board.getMaze(), board.getStart());
                     solveTimerDFS.start();
+                    if (buttonClip != null && buttonClip.isRunning()) {
+                        buttonClip.stop(); // Dừng nếu đang chạy
+                    }
+                    buttonClip = SoundManager.playSound("bfsdfs.wav", 1.0f);
                 }
             });
 
@@ -164,6 +197,10 @@
                 public void actionPerformed(ActionEvent e) {
                     BFS.initializeBFS(board.getMaze(), board.getStart());
                     solveTimerBFS.start();
+                    if (buttonClip != null && buttonClip.isRunning()) {
+                        buttonClip.stop(); // Dừng nếu đang chạy
+                    }
+                    buttonClip = SoundManager.playSound("bfsdfs.wav", 1.0f);
                 }
             });
             solveTimerBFS = new Timer(100, new ActionListener() {
@@ -181,6 +218,10 @@
             back.addActionListener(e -> {
                 Menu menu = new Menu();
                 this.dispose();
+                if (buttonClip != null && buttonClip.isRunning()) {
+                    buttonClip.stop(); // Dừng nếu đang chạy
+                }
+                buttonClip = SoundManager.playSound("back.wav", 1.0f);
             });
             controlPanel.add(back);
 
@@ -211,6 +252,7 @@
             // add the control panel to the frame
             this.add(controlPanel, BorderLayout.EAST);
 
+            controlPanel.setBackground(new Color(142, 207, 230));
 
             generationTimer = new Timer(100, new ActionListener() {
                 @Override

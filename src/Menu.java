@@ -1,12 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import javax.sound.sampled.*;
+import java.io.IOException;
 
 public class Menu {
     JFrame frame;
     JButton PlayButton;
     JButton ReadMe;
-
+    Clip buttonClip;
     Menu() {
+
         frame = new JFrame("Menu");
 
         // Thêm nền gradient
@@ -44,6 +50,11 @@ public class Menu {
         PlayButton.setForeground(Color.WHITE);
         PlayButton.setFocusPainted(false);
         PlayButton.addActionListener(e -> {
+            // Phát âm thanh khi nhấn nút
+            if (buttonClip != null && buttonClip.isRunning()) {
+                buttonClip.stop(); // Dừng nếu đang chạy
+            }
+            buttonClip = SoundManager.playSound("chonlv.wav", 1.0f);
             Difficulty difficulty = new Difficulty();
             frame.dispose();
         });
@@ -78,7 +89,11 @@ public class Menu {
         frame.setLocationRelativeTo(null); // Canh giữa màn hình
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        SoundManager.playBackgroundMusic("bg2.wav", 0.8f);
+
+
     }
+
 
     public static void main(String[] args) {
         new Menu();

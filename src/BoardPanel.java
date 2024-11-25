@@ -1,3 +1,4 @@
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +8,7 @@ public class BoardPanel extends JPanel {
     private int cols;
     private int cellSize;
     private Board board;
+    Clip buttonClip;
     BoardPanel(int rows, int cols, int cellSize, Board board) {
         this.rows = rows;
         this.cols = cols;
@@ -34,6 +36,7 @@ public class BoardPanel extends JPanel {
         // Draw DFS/BFS exploration path
         g.setColor(Color.GRAY);  // Wrong paths (explored but not solution)
         for (Point p : BoardSolver.getPath()) {
+
             g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
         }
         // Draw the final correct solution path in blue
@@ -48,6 +51,7 @@ public class BoardPanel extends JPanel {
 
         g.setColor(Color.YELLOW);  // End point
         g.fillRect(end.y * cellSize, end.x * cellSize, cellSize, cellSize);
+
     }
 
 
