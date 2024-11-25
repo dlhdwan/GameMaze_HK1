@@ -33,6 +33,16 @@
             this.controlPanel = new JPanel();
             this.controlPanel.setLayout(new FlowLayout());
             this.controlPanel.setPreferredSize(new Dimension(200, 100));
+
+            JButton FinalPath = new JButton("Final Path");
+            FinalPath.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    BoardSolver.showPath();
+                    boardPanel.repaint();
+                }
+            });
+
             // four moving buttons
             MoveRight = new JButton("Move Right");
             MoveRight.addActionListener(new ActionListener() {
@@ -186,7 +196,7 @@
 
             // add the control panel to the frame
             this.add(controlPanel, BorderLayout.EAST);
-
+            controlPanel.add(FinalPath);
 
             generationTimer = new Timer(100, new ActionListener() {
                 @Override
