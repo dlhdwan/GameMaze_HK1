@@ -1,5 +1,6 @@
-import java.awt.Point;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class BoardSolver {
 
@@ -19,6 +20,11 @@ public class BoardSolver {
         stack.clear();
         queue.clear();
         //openSet.clear();
+    }
+    //clear and show path final when erase traces and keep the path final
+    public static List<Point> showPath() {
+        path.clear();
+        return solutionPath;
     }
 
     // Reconstruct the path from the goal to the start
@@ -55,5 +61,6 @@ public class BoardSolver {
     public static List<Point> getSolutionPath() {
         return solutionPath;
     }
+
 
 }

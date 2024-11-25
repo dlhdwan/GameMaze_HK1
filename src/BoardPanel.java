@@ -37,17 +37,12 @@ public class BoardPanel extends JPanel {
             g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
         }
 
-        // Draw the final solution path
-        g.setColor(Color.RED);  // Correct path (solution)
-        for (Point p : BoardSolver.getSolutionPath()) {
-            g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
-        }
-        // Draw the final correct solution path in blue
-        g.setColor(Color.BLUE);  // Correct path (solution)
-        for (Point p : BoardSolver.getSolutionPath()) {
-            g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
-        }
 
+        // Draw the final correct solution path in blue
+        g.setColor(new Color(41, 237, 201, 255));
+        for (Point p : BoardSolver.getSolutionPath()) {
+            g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
+        }
 
         // Draw the start and end points
         g.setColor(Color.GREEN);  // Start point
@@ -56,4 +51,6 @@ public class BoardPanel extends JPanel {
         g.setColor(Color.YELLOW);  // End point
         g.fillRect(end.y * cellSize, end.x * cellSize, cellSize, cellSize);
     }
+
+
 }
