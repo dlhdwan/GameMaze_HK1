@@ -242,6 +242,9 @@
             });
 
         }
+        public static void main(String[] args) {
+            new BoardUI(30, 30);
+        }
 
 
     }

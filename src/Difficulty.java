@@ -53,7 +53,7 @@ public class Difficulty extends JFrame {
         decorateButton(medium, 150, 100);
         medium.setBackground(new Color(255, 215, 0)); // Gold
         medium.addActionListener(e -> {
-            BoardUI boardUI = new BoardUI(15, 15);
+            BoardUI boardUI = new BoardUI(16, 16);
             this.dispose();
         });
         backgroundPanel.add(medium);
@@ -63,7 +63,7 @@ public class Difficulty extends JFrame {
         decorateButton(hard, 200, 100);
         hard.setBackground(new Color(220, 20, 60)); // Crimson
         hard.addActionListener(e -> {
-            BoardUI boardUI = new BoardUI(20, 20);
+            BoardUI boardUI = new BoardUI(30, 30);
             this.dispose();
         });
         backgroundPanel.add(hard);
