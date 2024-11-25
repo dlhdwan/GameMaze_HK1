@@ -25,6 +25,8 @@
             this.setIconImage(new ImageIcon("src/logo.png").getImage());
             this.setLocation(500, 200);
             this.setSize(cols * cellSize + 200, rows * cellSize + 50);
+            //set location to center screen
+            this.setLocationRelativeTo(null);
             this.rows = rows;
             this.cols = cols;
             this.board = new Board(rows, cols);
@@ -32,8 +34,10 @@
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.controlPanel = new JPanel();
             this.controlPanel.setLayout(new FlowLayout());
-            this.controlPanel.setPreferredSize(new Dimension(200, 100));
-
+            this.controlPanel.setPreferredSize(new Dimension(200, rows * cellSize+200));
+            StatusLable = new JLabel("Please Generate Maze", JLabel.CENTER);
+            StatusLable.setFont(new Font("Arial", Font.BOLD, 13));
+            StatusLable.setPreferredSize(new Dimension(150, 50));
             JButton FinalPath = new JButton("Final Path");
             FinalPath.addActionListener(new ActionListener() {
                 @Override
@@ -44,7 +48,7 @@
             });
 
             // four moving buttons
-            MoveRight = new JButton("Move Right");
+            MoveRight = new JButton(">");
             MoveRight.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -52,8 +56,7 @@
                     board.setStart(new Point(board.getStart().x, board.getStart().y + 1));
                     boardPanel.repaint();}
                     catch (Exception ex){
-                        StatusLable.setText("You can't move right here" +
-                                " because there is a wall");
+                        StatusLable.setText("Invalid move");
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -61,8 +64,9 @@
                     }
                 }
             });
+            MoveRight.setPreferredSize(new Dimension(50, 25));
 
-            MoveLeft = new JButton("Move Left");
+            MoveLeft = new JButton("<");
             MoveLeft.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -70,8 +74,7 @@
                         board.setStart(new Point(board.getStart().x, board.getStart().y - 1));
                         boardPanel.repaint();                }
                     catch (Exception ex){
-                        StatusLable.setText("You can't move left here " +
-                                "because there's a wall");
+                        StatusLable.setText("Invalid move");
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -79,7 +82,8 @@
                     }
                 }
             });
-            MoveUp = new JButton("Move Up");
+            MoveLeft.setPreferredSize(new Dimension(50, 25));
+            MoveUp = new JButton("^");
             MoveUp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -88,8 +92,7 @@
                         boardPanel.repaint();
                     }
                     catch (Exception ex){
-                        StatusLable.setText("You can't move up here" +
-                                " because there's a wall");
+                        StatusLable.setText("Invalid move");
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -97,7 +100,9 @@
                     }
                 }
             });
-            MoveDown = new JButton("Move Down");
+            MoveUp.setPreferredSize(new Dimension(150, 25));
+            MoveDown = new JButton("v");
+            MoveDown.setPreferredSize(new Dimension(50, 25));
             MoveDown.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -106,8 +111,7 @@
                         boardPanel.repaint();
                     }
                     catch (Exception ex){
-                        StatusLable.setText("You can't move down here" +
-                                " because there's a wall");
+                        StatusLable.setText("Invalid move");
 
                     }
                     if (board.getStart().equals(board.getEnd())) {
@@ -118,6 +122,7 @@
             });
             // creating maze button
             JButton regenerateButton = new JButton("Generate Board");
+            regenerateButton.setPreferredSize(new Dimension(150, 50));
             regenerateButton.addActionListener(e -> {
                 board.resetMaze();
                 boardPanel.repaint();
@@ -186,17 +191,26 @@
             // Add the control panel to the frame
             controlPanel.add(solveDFSButton);
             controlPanel.add(solveBFSButton);
-            controlPanel.add(MoveRight);
-            controlPanel.add(MoveLeft);
-            controlPanel.add(MoveUp);
-            controlPanel.add(MoveDown);
             controlPanel.add(regenerateButton);
-            StatusLable = new JLabel("Status");
+
             controlPanel.add(StatusLable);
+            controlPanel.add(FinalPath);
+            controlPanel.add(MoveUp);
+            controlPanel.add(MoveLeft);
+            controlPanel.add(MoveRight);
+            controlPanel.add(MoveDown);
+            for(Component c : controlPanel.getComponents()){
+                if(c instanceof JButton){
+                    c.setEnabled(false);
+                }
+            }
+            back.setEnabled(true);
+            regenerateButton.setEnabled(true);
+
 
             // add the control panel to the frame
             this.add(controlPanel, BorderLayout.EAST);
-            controlPanel.add(FinalPath);
+
 
             generationTimer = new Timer(100, new ActionListener() {
                 @Override
@@ -253,7 +267,7 @@
 
         }
         public static void main(String[] args) {
-            new BoardUI(30, 30);
+            new BoardUI(10, 10);
         }
 
 
