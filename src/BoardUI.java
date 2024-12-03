@@ -21,9 +21,11 @@
         JButton MoveDown ;
         JButton back;
         JButton AddWall;
+        JButton AddWeight;
         JLabel StatusLable;
         Clip buttonClip;
         JProgressBar ProgressBar;
+
         public BoardUI(int rows ,int cols) {
 
             this.setTitle("Board");
@@ -44,6 +46,7 @@
             StatusLable.setFont(new Font("Arial", Font.BOLD, 13));
             StatusLable.setForeground(new Color(34, 139, 34)); // Forest Green
             // set text to always fit
+            AddWeight = new JButton("DisplayWeight");
             StatusLable.setSize(150, 50);
             StatusLable.setPreferredSize(new Dimension(150, 50));
             JButton FinalPath = new JButton("Final Path");
@@ -256,8 +259,23 @@
                     }
                 }
             });
+            AddWeight.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boardPanel.WeightDisplay = !boardPanel.WeightDisplay;
+                    if (boardPanel.WeightDisplay) {
+                        AddWeight.setText("Hide Weight");
+                        StatusLable.setText("Weight Displayed");
+                    } else {
+                        AddWeight.setText("Display Weight");
+                        StatusLable.setText("Please make a move");
+                    }
+                    repaint();
+                }
+            });
             controlPanel.add(back);
             controlPanel.add(AddWall);
+            controlPanel.add(AddWeight);
 
             // adding comppoents to the frame
             this.setLayout(new BorderLayout());

@@ -75,8 +75,10 @@ public class Board {
             if (newX > 0 && newX < rows - 1 && newY > 0 && newY < cols - 1 && maze[newX][newY] == 0) {
                 maze[x + dir[0]][y + dir[1]] = 1;  // Mark path between current and new point
                 maze[newX][newY] = 1;  // Mark new point as path
+                Random Random = new Random();
+                Weight[newX][newY] = Random.nextInt(10) + 1;
+                Weight[x + dir[0]][y + dir[1]] = Random.nextInt(10) + 1;
                 //weight of the new point random
-                Weight[newX][newY] = (int) (Math.random() * 10);
                 stack.push(new Point(newX, newY));  // Add new point to the stack
                 foundNewPath = true;
                 break;  // Break after finding one path to slow down generation

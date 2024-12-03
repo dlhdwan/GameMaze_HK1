@@ -11,6 +11,7 @@ public class BoardPanel extends JPanel {
     private int cellSize;
     private Board board;
     public Boolean clickable;
+    public boolean WeightDisplay;
     Clip buttonClip;
     BoardPanel(int rows, int cols, int cellSize, Board board) {
         this.rows = rows;
@@ -18,6 +19,7 @@ public class BoardPanel extends JPanel {
         this.cellSize = cellSize;
         this.board = board;
         clickable = false;
+        WeightDisplay = false;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -51,6 +53,7 @@ public class BoardPanel extends JPanel {
                 if (boardData[i][j] == 1) {
                     g.setColor(Color.WHITE);  // Path
                     g.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                    if(!WeightDisplay) continue;
                     g.setColor(Color.BLACK);  // Wall
                     g.drawString(Integer.toString(Weight[i][j]), j * cellSize + cellSize / 2, i * cellSize + cellSize / 2);
                 } else {
