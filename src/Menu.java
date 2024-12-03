@@ -91,7 +91,6 @@ public class Menu {
         frame.setVisible(true);
         SoundManager.playBackgroundMusic("bg2.wav", 0.8f);
 
-
     }
 
 

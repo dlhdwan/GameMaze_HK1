@@ -61,6 +61,11 @@ public class BoardSolver {
     public static List<Point> getSolutionPath() {
         return solutionPath;
     }
-
+    public static int stepCounter(){
+        return visited.size();
+    }
+    public static int solutionCounter(){
+        return solutionPath.size();
+    }
 
 }

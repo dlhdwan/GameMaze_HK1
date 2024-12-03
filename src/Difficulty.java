@@ -29,7 +29,7 @@ public class Difficulty extends JFrame {
             }
         };
         backgroundPanel.setLayout(new FlowLayout());
-        backgroundPanel.setPreferredSize(new Dimension(400, 500));
+        backgroundPanel.setPreferredSize(new Dimension(400, 300));
         this.setContentPane(backgroundPanel);
 
         // Tiêu đề
@@ -41,7 +41,7 @@ public class Difficulty extends JFrame {
 
         // Nút "Easy"
         easy = new JButton("Easy");
-        decorateButton(easy, 100, 100);
+        decorateButton(easy, 100, 125);
         easy.setBackground(new Color(50, 205, 50)); // Lime Green
         easy.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(10, 10);
@@ -56,7 +56,7 @@ public class Difficulty extends JFrame {
 
         // Nút "Medium"
         medium = new JButton("Medium");
-        decorateButton(medium, 150, 100);
+        decorateButton(medium, 150, 125);
         medium.setBackground(new Color(255, 215, 0)); // Gold
         medium.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(16, 16);
@@ -70,7 +70,7 @@ public class Difficulty extends JFrame {
 
         // Nút "Hard"
         hard = new JButton("Hard");
-        decorateButton(hard, 200, 100);
+        decorateButton(hard, 200, 125);
         hard.setBackground(new Color(220, 20, 60)); // Crimson
         hard.addActionListener(e -> {
             BoardUI boardUI = new BoardUI(30, 30);
@@ -84,7 +84,7 @@ public class Difficulty extends JFrame {
 
         // Nút "Back"
         back = new JButton("Back");
-        decorateButton(back, 250, 100);
+        decorateButton(back, 250, 125);
         back.addActionListener(e -> {
             Menu menu = new Menu();
             this.dispose();
@@ -96,7 +96,7 @@ public class Difficulty extends JFrame {
         backgroundPanel.add(back);
 
         // Cấu hình cửa sổ
-        this.setSize(400, 500);
+        this.setSize(400, 400);
         this.setLayout(null);
         this.setVisible(true);
     }
