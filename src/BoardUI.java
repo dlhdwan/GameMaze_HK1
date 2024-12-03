@@ -20,9 +20,12 @@
         JButton MoveUp ;
         JButton MoveDown ;
         JButton back;
+        JButton AddWall;
         JLabel StatusLable;
         Clip buttonClip;
+        JProgressBar ProgressBar;
         public BoardUI(int rows ,int cols) {
+
             this.setTitle("Board");
             this.setIconImage(new ImageIcon("src/logo.png").getImage());
             this.setLocation(500, 200);
@@ -39,6 +42,9 @@
             this.controlPanel.setPreferredSize(new Dimension(200, rows * cellSize+200));
             StatusLable = new JLabel("Please Generate Maze", JLabel.CENTER);
             StatusLable.setFont(new Font("Arial", Font.BOLD, 13));
+            StatusLable.setForeground(new Color(34, 139, 34)); // Forest Green
+            // set text to always fit
+            StatusLable.setSize(150, 50);
             StatusLable.setPreferredSize(new Dimension(150, 50));
             JButton FinalPath = new JButton("Final Path");
             FinalPath.addActionListener(new ActionListener() {
@@ -68,6 +74,9 @@
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
+                        ResetStatusLableDelay(StatusLable,"Please make a move",2000);
+
+
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -92,6 +101,7 @@
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
+                        ResetStatusLableDelay(StatusLable,"Please make a move",2000);
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -114,6 +124,7 @@
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
+                        ResetStatusLableDelay(StatusLable,"Please make a move",2000);
                     }
                     if (board.getStart().equals(board.getEnd())) {
                         WinningFrame winningFrame = new WinningFrame();
@@ -137,6 +148,7 @@
                     }
                     catch (Exception ex){
                         StatusLable.setText("Invalid move");
+                        ResetStatusLableDelay(StatusLable,"Please make a move",2000);
 
                     }
                     if (board.getStart().equals(board.getEnd())) {
@@ -146,6 +158,11 @@
                 }
             });
             // creating maze button
+            ProgressBar = new JProgressBar(0,100);
+            ProgressBar.setStringPainted(true);
+            ProgressBar.setForeground(new Color(Color.GREEN.getRGB()));
+            ProgressBar.setValue(0);
+
             JButton regenerateButton = new JButton("Generate Board");
             regenerateButton.setPreferredSize(new Dimension(150, 50));
             regenerateButton.addActionListener(e -> {
@@ -161,6 +178,8 @@
                     }
                 }
                 StatusLable.setText("Generating Maze");
+                ProgressBar.setValue(0);
+                ProgressBar.setVisible(true);
                 generationTimer.start();
 
             });
@@ -223,7 +242,22 @@
                 }
                 buttonClip = SoundManager.playSound("back.wav", 1.0f);
             });
+            AddWall = new JButton("Add Wall");
+            AddWall.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boardPanel.clickable = !boardPanel.clickable;
+                    if (boardPanel.clickable) {
+                        AddWall.setText("Stop Adding Wall");
+                        StatusLable.setText("Click the cell");
+                    } else {
+                        AddWall.setText("Adding Wall");
+                        StatusLable.setText("Please make a move");
+                    }
+                }
+            });
             controlPanel.add(back);
+            controlPanel.add(AddWall);
 
             // adding comppoents to the frame
             this.setLayout(new BorderLayout());
@@ -238,8 +272,10 @@
             controlPanel.add(FinalPath);
             controlPanel.add(MoveUp);
             controlPanel.add(MoveLeft);
-            controlPanel.add(MoveRight);
             controlPanel.add(MoveDown);
+            controlPanel.add(MoveRight);
+            controlPanel.add(ProgressBar);
+
             for(Component c : controlPanel.getComponents()){
                 if(c instanceof JButton){
                     c.setEnabled(false);
@@ -254,10 +290,11 @@
 
             controlPanel.setBackground(new Color(142, 207, 230));
 
-            generationTimer = new Timer(100, new ActionListener() {
+            generationTimer = new Timer(10, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (board.isDone()) {
+                        ProgressBar.setVisible(false);
                         generationTimer.stop();
                         for (Component c : controlPanel.getComponents()) {
                             if(c instanceof JButton){
@@ -269,12 +306,24 @@
                     }
                     else{
                         board.step();
+                        ProgressBar.setValue(board.getProgress());
                         boardPanel.repaint();
                     }
                 }
             });
 
             this.setVisible(true);
+        }
+        void ResetStatusLableDelay(JLabel lb , String text , int delay){
+            Timer timer = new Timer(delay, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    lb.setText(text);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+
         }
         void AddingKeyBinding (){
             // adding key binding to the frame that will do the button action
