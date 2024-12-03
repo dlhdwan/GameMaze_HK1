@@ -14,6 +14,7 @@
         private Timer generationTimer;
         private Timer solveTimerDFS;
         private Timer solveTimerBFS;
+        private Timer solveTimerDjikstra;
         private JPanel controlPanel;
         JButton MoveRight ;
         JButton MoveLeft ;
@@ -22,6 +23,7 @@
         JButton back;
         JButton AddWall;
         JButton AddWeight;
+        JButton SolveWithDjikstra;
         JLabel StatusLable;
         Clip buttonClip;
         JProgressBar ProgressBar;
@@ -165,7 +167,18 @@
             ProgressBar.setStringPainted(true);
             ProgressBar.setForeground(new Color(Color.GREEN.getRGB()));
             ProgressBar.setValue(0);
-
+            SolveWithDjikstra = new JButton("Solve with Djikstra");
+            SolveWithDjikstra.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Dijkstra.initializeDijkstra(board.getMaze(), board.getWeight(), board.getStart());
+                    solveTimerDjikstra.start();
+                    if (buttonClip != null && buttonClip.isRunning()) {
+                        buttonClip.stop(); // Stop if already running
+                    }
+                    buttonClip = SoundManager.playSound("bfsdfs.wav", 1.0f);
+                }
+            });
             JButton regenerateButton = new JButton("Generate Board");
             regenerateButton.setPreferredSize(new Dimension(150, 50));
             regenerateButton.addActionListener(e -> {
@@ -207,6 +220,18 @@
                     if (!DFS.stepDFS(board.getMaze(), board.getEnd())) {
                         solveTimerDFS.stop();
                         boardPanel.repaint();
+                    } else {
+                        boardPanel.repaint();
+                    }
+                }
+            });
+            solveTimerDjikstra = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!Dijkstra.stepDijkstra(board.getMaze(), board.getWeight(), board.getEnd())) {
+                        solveTimerDjikstra.stop();
+                        boardPanel.repaint();
+                        StatusLable.setText("Minium Price is"+Dijkstra.getResults());
                     } else {
                         boardPanel.repaint();
                     }
@@ -284,6 +309,7 @@
             // Add the control panel to the frame
             controlPanel.add(solveDFSButton);
             controlPanel.add(solveBFSButton);
+            controlPanel.add(SolveWithDjikstra);
             controlPanel.add(regenerateButton);
 
             controlPanel.add(StatusLable);

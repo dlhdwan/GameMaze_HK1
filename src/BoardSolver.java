@@ -10,7 +10,7 @@ public class BoardSolver {
     public static Map<Point, Point> cameFrom = new HashMap<>();  // Parent tracking for backtracking the solution path
     public static Stack<Point> stack = new Stack<>();  // Stack for DFS
     public static Queue<Point> queue = new LinkedList<>();  // Queue for BFS
-    //public static PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingDouble(n -> n.fScore));  // Priority queue for A*
+
 
     public static void clearMaze() {
         path.clear();

@@ -65,8 +65,7 @@ public class BoardPanel extends JPanel {
         }
         // Draw DFS/BFS exploration path
         g.setColor(Color.GRAY);  // Wrong paths (explored but not solution)
-        for (Point p : BoardSolver.getPath()) {
-
+        for (Point p : BoardSolver.getPath()) { 
             g.fillRect(p.y * cellSize, p.x * cellSize, cellSize, cellSize);
         }
         // Draw the final correct solution path in blue
