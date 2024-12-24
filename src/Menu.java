@@ -90,10 +90,7 @@ public class Menu {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         SoundManager.playBackgroundMusic("bg2.wav", 0.8f);
-
     }
-
-
     public static void main(String[] args) {
         new Menu();
     }
